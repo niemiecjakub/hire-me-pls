@@ -1,4 +1,3 @@
-
 using HireMePls.Interfaces;
 using HireMePls.Services;
 using Microsoft.SemanticKernel;
@@ -27,6 +26,8 @@ namespace HireMePls
 
       builder.Services.AddScoped<IWebScrapeService, WebScrapeService>();
       builder.Services.AddScoped<IJobService, JobService>();
+      builder.Services.AddScoped<IPdfService, PdfService>();
+      builder.Services.AddScoped<ICvService, CvService>();
 
       var app = builder.Build();
 

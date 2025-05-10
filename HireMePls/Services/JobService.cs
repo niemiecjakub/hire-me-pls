@@ -40,9 +40,9 @@ namespace HireMePls.Services
           - Do not change language
          """;
 
-    public async Task<JobDocument> GetJobDocument(string jobOfferUrl)
+    public async Task<JobDocument> GetJobDocumentAsync(string jobOfferUrl)
     {
-      var pageContent = await _webScrapeService.GetPageContent(jobOfferUrl);
+      var pageContent = await _webScrapeService.GetPageContentAsync(jobOfferUrl);
       IChatCompletionService chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
       ChatMessageContent jobDetails = await chatCompletionService.GetChatMessageContentAsync(pageContent, new OpenAIPromptExecutionSettings()
       {

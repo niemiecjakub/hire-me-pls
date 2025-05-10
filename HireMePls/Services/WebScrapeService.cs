@@ -5,7 +5,7 @@ namespace HireMePls.Services
 {
   public class WebScrapeService : IWebScrapeService
   {
-    public async Task<string> GetPageContent(string url)
+    public async Task<string> GetPageContentAsync(string url)
     {
       var html = await new HttpClient().GetStringAsync(url);
 

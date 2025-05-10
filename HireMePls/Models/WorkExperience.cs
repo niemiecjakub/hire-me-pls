@@ -18,10 +18,10 @@ namespace HireMePls.Models
     public string Location { get; set; }
 
     [Description("The start date of the work period.")]
-    public DateTime? BeginDate { get; set; }
+    public string? BeginDate { get; set; }
 
     [Description("The end date of the education work, if applicable.")]
-    public DateTime? EndDate { get; set; }
+    public string? EndDate { get; set; }
 
     [Description("A list of key duties, achievements, or responsibilities associated with the role.")]
     public List<string> Responsibilities { get; set; }

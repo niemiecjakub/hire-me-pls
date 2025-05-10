@@ -4,6 +4,6 @@ namespace HireMePls.Interfaces
 {
   public interface IJobService
   {
-    public Task<JobDocument> GetJobDocument(string webPageContent);
+    public Task<JobDocument> GetJobDocumentAsync(string webPageContent);
   }
 }

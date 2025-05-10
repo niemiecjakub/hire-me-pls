@@ -2,6 +2,6 @@
 {
   public interface IWebScrapeService
   {
-    public Task<string> GetPageContent(string url);
+    public Task<string> GetPageContentAsync(string url);
   }
 }

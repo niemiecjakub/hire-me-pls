@@ -21,9 +21,9 @@ namespace HireMePls.Models
     public string FieldOfStudy { get; set; }
 
     [Description("The start date of the education period.")]
-    public DateTime? BeginDate { get; set; }
+    public string? BeginDate { get; set; }
 
     [Description("The end date of the education period, if applicable.")]
-    public DateTime? EndDate { get; set; }
+    public string? EndDate { get; set; }
   }
 }

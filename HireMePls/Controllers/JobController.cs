@@ -22,10 +22,17 @@ namespace HireMePls.Controllers
     [ProducesResponseType(200, Type = typeof(JobDocument))]
     public async Task<ActionResult<JobDocument>> GetJobData([FromBody] string jobUrl)
     {
-      _logger.Log(LogLevel.Information, $"Getting job data from: {jobUrl}");
-      var job = await _jobService.GetJobDocument(jobUrl);
-      return Ok(job);
+      try
+      {
+        _logger.LogInformation($"Getting job data from: {jobUrl}");
+        var job = await _jobService.GetJobDocumentAsync(jobUrl);
+        return Ok(job);
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex.Message, ex);
+        return BadRequest(ex.Message);
+      }
     }
-
   }
 }
