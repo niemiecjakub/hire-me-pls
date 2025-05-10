@@ -1,3 +1,4 @@
+./HireMePls/appsettings.json
 # Created by https://www.toptal.com/developers/gitignore/api/aspnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=aspnetcore
 
@@ -272,3 +273,5 @@ __pycache__/
 # tools/
 
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore
+/HireMePls/appsettings.json
+/HireMePls/appsettings.json

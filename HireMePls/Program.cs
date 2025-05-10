@@ -1,4 +1,8 @@
 
+using HireMePls.Interfaces;
+using HireMePls.Services;
+using Microsoft.SemanticKernel;
+
 namespace HireMePls
 {
   public class Program
@@ -7,12 +11,22 @@ namespace HireMePls
     {
       var builder = WebApplication.CreateBuilder(args);
 
-      // Add services to the container.
-
       builder.Services.AddControllers();
-      // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
+
+      builder.Services.AddSingleton<Kernel>(sp =>
+      {
+        var kernelBuilder = Kernel.CreateBuilder();
+        kernelBuilder.AddOpenAIChatCompletion(
+          modelId: builder.Configuration["OpenAI:ModelId"],
+          apiKey: builder.Configuration["OpenAI:ApiKey"]);
+
+        return kernelBuilder.Build();
+      });
+
+      builder.Services.AddScoped<IWebScrapeService, WebScrapeService>();
+      builder.Services.AddScoped<IJobService, JobService>();
 
       var app = builder.Build();
 
