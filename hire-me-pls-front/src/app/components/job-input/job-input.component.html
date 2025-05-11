@@ -1,0 +1,5 @@
+<input type="text" placeholder="Enter a string" [(ngModel)]="jobUrlInput" />
+<button type="submit" (click)="onSubmit()">Submit</button>
+<div>
+  <p>{{ isLoading ? "Loading..." : jobContent }}</p>
+</div>
