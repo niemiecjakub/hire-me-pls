@@ -1,5 +1,119 @@
 <input type="text" placeholder="Enter a string" [(ngModel)]="jobUrlInput" />
 <button type="submit" (click)="onSubmit()">Submit</button>
-<div>
-  <p>{{ isLoading ? "Loading..." : jobContent }}</p>
+
+<div *ngIf="isLoadingJob">Loading...</div>
+
+<div *ngIf="jobDocument">
+  <div>
+    <p>Title</p>
+    <span>{{ jobDocument.title }}</span>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <span>{{ jobDocument.company }}</span>
+  </div>
+  <div>
+    <h4>Location</h4>
+    <span>{{ jobDocument.location }}</span>
+  </div>
+  <div>
+    <h4>Summary</h4>
+    <span>{{ jobDocument.summary }}</span>
+  </div>
+
+  <div *ngIf="jobDocument.responsibilities?.length">
+    <h4>Responsibilities:</h4>
+    <ul>
+      <li *ngFor="let item of jobDocument.responsibilities">{{ item }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="jobDocument.requirements?.length">
+    <h4>Requirements:</h4>
+    <ul>
+      <li *ngFor="let item of jobDocument.requirements">{{ item }}</li>
+    </ul>
+  </div>
+</div>
+
+<input type="file" (change)="onFileSelected($event)" />
+<button type="button" (click)="onFileSubmit()">Submit</button>
+
+<div *ngIf="isLoadingCv">Loading...</div>
+
+<div *ngIf="cvDocument">
+  <div>
+    <h4>Personal details</h4>
+    <span>{{ cvDocument.personalDetails.name }}</span
+    >, <span>{{ cvDocument.personalDetails.phone }}</span
+    >, <span>{{ cvDocument.personalDetails.email }}</span
+    >,
+    <span>{{ cvDocument.personalDetails.location }}</span>
+  </div>
+
+  <div *ngIf="cvDocument.aboutMe">
+    <h4>About me</h4>
+    <span>{{ cvDocument.aboutMe }}</span>
+  </div>
+
+  <div>
+    <h4>Links</h4>
+    <span *ngFor="let item of cvDocument.personalDetails.links"
+      >{{ item.name }} - {{ item.url }}</span
+    >
+  </div>
+
+  <div *ngIf="cvDocument.education?.length">
+    <h4>Requirements:</h4>
+    <ul>
+      <li *ngFor="let item of cvDocument.education">
+        <span>{{ item.degree }}</span>
+        <span>{{ item.institution }}, {{ item.location }}</span>
+        <span>{{ item.fieldOfStudy }}</span>
+        <span>{{ item.description }}</span>
+        <span>{{ item.beginDate }} - {{ item.endDate }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="cvDocument.workExperience?.length">
+    <h4>Experience:</h4>
+    <ul>
+      <li *ngFor="let item of cvDocument.workExperience">
+        <span>{{ item.jobTitle }}</span>
+        <span>{{ item.description }}</span>
+        <span>{{ item.company }}, {{ item.location }}</span>
+        <span>{{ item.beginDate }} - {{ item.endDate }}</span>
+        <div *ngIf="item.responsibilities?.length">
+          <li *ngFor="let resp of item.responsibilities">{{ resp }}</li>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="cvDocument.skills?.length">
+    <h4>Skills:</h4>
+    <ul>
+      <li *ngFor="let skill of cvDocument.skills">{{ skill }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="cvDocument.languages?.length">
+    <h4>Languages:</h4>
+    <ul>
+      <li *ngFor="let lang of cvDocument.languages">{{ lang }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="cvDocument.otherSections?.length">
+    <div *ngFor="let section of cvDocument.otherSections">
+      <h4>{{ section.title }}</h4>
+      <p>{{ section.description }}</p>
+      <div *ngIf="section.details?.length">
+        <ul>
+          <li *ngFor="let detail of section.details">{{ detail }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

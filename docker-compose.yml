@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  hiremepls-api:
+    image: hiremepls-api
+    build:
+      context: ./HireMePls
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - hiremepls-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  hiremepls-front:
+    image: hiremepls-front
+    build:
+      context: ./hire-me-pls-front
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    networks:
+      - hiremepls-network
+    depends_on:
+      - hiremepls-api
+
+networks:
+  hiremepls-network:
+    driver: bridge

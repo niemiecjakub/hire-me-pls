@@ -37,14 +37,17 @@ namespace HireMePls
         app.UseSwagger();
         app.UseSwaggerUI();
       }
+      // if (!app.Environment.IsDevelopment()) // Or a more specific check
+      // {
+      //     app.UseHttpsRedirection();
+      // }
 
-      app.UseHttpsRedirection();
 
       app.UseCors(x => x
-         .AllowAnyMethod()
-         .AllowAnyHeader()
-         .AllowCredentials()
-         .SetIsOriginAllowed(origin => true));
+   .AllowAnyMethod()
+   .AllowAnyHeader()
+   .AllowCredentials()
+   .SetIsOriginAllowed(origin => true));
 
       app.UseAuthorization();
 

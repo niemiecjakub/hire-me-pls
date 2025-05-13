@@ -1,44 +1,61 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { JobDocument } from '../../interfaces/JobDocument';
+import { CommonModule } from '@angular/common';
+import { CvDocument } from '../../interfaces/CvDocument';
+import { JobService } from '../../services/job.service';
+import { CvService } from '../../services/cv.service';
 
 @Component({
   selector: 'job-input',
   templateUrl: './job-input.component.html',
   styleUrls: ['./job-input.component.scss'],
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
 })
 export class JobInputComponent {
+  isLoadingJob: boolean = false;
   jobUrlInput: string = '';
-  jobContent: string = 'no-content';
-  isLoading: boolean = false;
+  jobDocument: JobDocument | null = null;
 
-  constructor(private http: HttpClient) {}
+  isLoadingCv: boolean = false;
+  selectedFile: File | null = null;
+  cvDocument: CvDocument | null = null;
 
-  onSubmit(): void {
-    this.fetchJobContent();
+  constructor(private jobService: JobService, private cvService: CvService) {}
+
+  async onSubmit(): Promise<void> {
+    if (!this.jobUrlInput) return;
+
+    this.isLoadingJob = true;
+    try {
+      this.jobDocument = await this.jobService.getJobDocument(this.jobUrlInput);
+    } catch (error) {
+      console.error('Failed to fetch job document:', error);
+    } finally {
+      this.isLoadingJob = false;
+    }
   }
 
-  fetchJobContent(): void {
-    this.isLoading = true;
-    const apiUrl = 'https://localhost:32774/api/Job';
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
 
-    const headers = new HttpHeaders({
-      Accept: 'text/plain',
-      'Content-Type': 'application/json',
-    });
+  async onFileSubmit(): Promise<void> {
+    if (!this.selectedFile) {
+      alert('Please select a file first.');
+      return;
+    }
 
-    this.http
-      .post(apiUrl, `"${this.jobUrlInput}"`, { headers, responseType: 'text' })
-      .subscribe(
-        (response) => {
-          this.isLoading = false;
-          this.jobContent = response;
-        },
-        (error) => {
-          console.error('Error:', error);
-          this.jobContent = 'Failed to load content';
-        }
-      );
+    this.isLoadingCv = true;
+    try {
+      this.cvDocument = await this.cvService.getCvDocument(this.selectedFile);
+    } catch (error) {
+      console.error('Failed to fetch CV document:', error);
+    } finally {
+      this.isLoadingCv = false;
+    }
   }
 }
